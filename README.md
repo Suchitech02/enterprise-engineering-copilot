@@ -1,23 +1,39 @@
 # Enterprise Engineering Copilot
 
-An AI-powered engineering assistant designed for enterprise data platforms.
+Enterprise Engineering Copilot is an AI-powered engineering assistant designed to help engineers build, modernize, and troubleshoot enterprise data platforms.
 
 ## Vision
 
-Enterprise Engineering Copilot helps engineers accelerate development by combining LLMs with enterprise engineering best practices.
+Instead of acting as a generic chatbot, Enterprise Engineering Copilot understands enterprise engineering concepts including:
 
-Initial focus areas include:
-
-- Databricks SQL generation
-- PySpark generation
+- Databricks
+- Apache Spark
 - Delta Live Tables
-- Spark error diagnostics
-- Medallion architecture recommendations
-- REST API ingestion patterns
-- Azure Data Factory migration assistance
-- Retrieval-Augmented Generation over enterprise documentation
+- Medallion Architecture
+- Azure Data Factory migration
+- REST API ingestion
+- PySpark
+- SQL
+- Enterprise Lakehouse Patterns
 
-## Technology Stack
+The assistant is being built incrementally using modern AI engineering practices including Retrieval-Augmented Generation (RAG), structured outputs, and agentic workflows.
+
+## Current Status
+
+🚧 In Development
+
+## Planned Features
+
+- Natural language → Databricks SQL
+- PySpark code generation
+- Spark error analysis
+- Delta Live Tables generation
+- Medallion Architecture recommendations
+- Enterprise RAG
+- ADF → Databricks migration assistant
+- Multi-agent engineering workflows
+
+## Tech Stack
 
 - Python
 - FastAPI
@@ -30,10 +46,11 @@ Initial focus areas include:
 
 ## Roadmap
 
+- [x] Project initialization
+- [ ] FastAPI backend
+- [ ] Streamlit frontend
+- [ ] OpenAI integration
 - [ ] SQL Generator
 - [ ] PySpark Generator
-- [ ] Spark Error Analyzer
-- [ ] Delta Live Tables Generator
 - [ ] RAG
-- [ ] Multi-Agent Architecture
-- [ ] ADF Migration Assistant
+- [ ] Multi-agent system
