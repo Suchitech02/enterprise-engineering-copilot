@@ -54,3 +54,29 @@ The assistant is being built incrementally using modern AI engineering practices
 - [ ] PySpark Generator
 - [ ] RAG
 - [ ] Multi-agent system
+
+## Development
+
+Start the development server:
+
+```bash
+make dev
+```
+
+Run tests:
+
+```bash
+make test
+```
+
+Run linting:
+
+```bash
+make lint
+```
+
+Format the code:
+
+```bash
+make format
+```
