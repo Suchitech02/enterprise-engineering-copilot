@@ -1,6 +1,12 @@
-import streamlit as st
 import json
 
+import streamlit as st
+
+from copilot.generator.project_generator import ProjectGenerator
+from copilot.models.bronze import (
+    BronzeGenerationRequest,
+    BronzeGenerationResponse,
+)
 from copilot.ui.client import CopilotClient
 
 client = CopilotClient()
@@ -49,6 +55,7 @@ with st.form(key="bronze_generation_form"):
 
     generate = st.form_submit_button("Generate Bronze Pipeline")
 
+
 if generate:
 
     try:
@@ -63,31 +70,69 @@ if generate:
             sample_response=parsed_json,
         )
 
+        bronze_response = BronzeGenerationResponse(**response)
+
+        request = BronzeGenerationRequest(
+            api_name=api_name,
+            endpoint=endpoint,
+            authentication=authentication,
+            description=description,
+            sample_response=parsed_json,
+        )
+
+        files = ProjectGenerator.generate_files(
+            request,
+            bronze_response,
+        )
+
         st.success("Bronze pipeline generated successfully!")
 
         st.header("Summary")
-        st.write(response["summary"])
+        st.write(bronze_response.summary)
+
+        st.divider()
 
         st.header("Python Code")
-        st.code(response["python_code"], language="python")
+        st.code(bronze_response.python_code, language="python")
+
+        st.divider()
 
         st.header("SQL Code")
-        st.code(response["sql_code"], language="sql")
+        st.code(bronze_response.sql_code, language="sql")
+
+        st.divider()
 
         st.header("Folder Structure")
-        st.code(response["folder_structure"])
+        st.code(bronze_response.folder_structure)
+
+        st.divider()
 
         st.header("Quality Rules")
-        for rule in response["quality_rules"]:
+        for rule in bronze_response.quality_rules:
             st.write(f"• {rule}")
 
+        st.divider()
+
         st.header("Assumptions")
-        for assumption in response["assumptions"]:
+        for assumption in bronze_response.assumptions:
             st.write(f"• {assumption}")
+        
+        st.divider()
+
+        st.subheader("Download Generated Files")
+
+        for filename, content in files.items():
+            st.download_button(
+                label=f"Download {filename}",
+                data=content,
+                file_name=filename,
+            )
+
+        st.divider()
 
     except json.JSONDecodeError:
         st.error("Sample Response must be valid JSON.")
 
     except Exception as ex:
         
-        st.error(str(ex))
+        st.error(f"Failed to generate Bronze pipeline: {ex}")
