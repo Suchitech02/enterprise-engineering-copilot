@@ -1,3 +1,4 @@
+from copilot.llm.base import BaseLLMClient
 from copilot.llm.factory import get_llm
 from copilot.models.bronze import BronzeGenerationRequest, BronzeGenerationResponse
 from copilot.prompts.prompt_builder import PromptBuilder
@@ -7,8 +8,8 @@ from copilot.parsers.bronze_parser import BronzeParser
 class BronzeService:
     """Service responsible for Bronze AI orchestration."""
 
-    def __init__(self) -> None:
-        self.llm = get_llm()
+    def __init__(self, llm: BaseLLMClient | None = None) -> None:
+        self.llm = llm 
 
     def generate(
         self,
