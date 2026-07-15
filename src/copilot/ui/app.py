@@ -1,6 +1,10 @@
 import streamlit as st
 import json
 
+from copilot.ui.client import CopilotClient
+
+client = CopilotClient()
+
 st.set_page_config(
     page_title="Enterprise Engineering Copilot",
     layout="wide",
@@ -47,15 +51,25 @@ with st.form(key="bronze_generation_form"):
 
 if generate:
 
-    st.success("Form submitted successfully!")
-
-    st.write("API Name:", api_name)
-    st.write("Endpoint:", endpoint)
-    st.write("Authentication:", authentication)
-    st.write("Description:", description)
-
     try:
+
         parsed_json = json.loads(sample_response)
-        st.json(parsed_json)
+
+        response = client.generate_bronze(
+            api_name=api_name,
+            endpoint=endpoint,
+            authentication=authentication,
+            description=description,
+            sample_response=parsed_json,
+        )
+
+        st.success("Bronze pipeline generated successfully!")
+
+        st.json(response)
+
     except json.JSONDecodeError:
         st.error("Sample Response must be valid JSON.")
+
+    except Exception as ex:
+        
+        st.error(str(ex))
