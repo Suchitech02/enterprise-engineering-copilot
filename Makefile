@@ -16,3 +16,6 @@ typecheck:
 	uv run mypy src
 
 all: format lint test
+
+ui:
+	PYTHONPATH=src uv run streamlit run src/copilot/ui/app.py
