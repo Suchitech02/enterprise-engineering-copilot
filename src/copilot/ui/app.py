@@ -8,6 +8,7 @@ from copilot.models.bronze import (
     BronzeGenerationResponse,
 )
 from copilot.ui.client import CopilotClient
+from copilot.generator.zip_generator import ZipGenerator
 
 client = CopilotClient()
 
@@ -85,6 +86,8 @@ if generate:
             bronze_response,
         )
 
+        zip_bytes = ZipGenerator.generate_zip(files)
+
         st.success("Bronze pipeline generated successfully!")
 
         st.header("Summary")
@@ -121,12 +124,12 @@ if generate:
 
         st.subheader("Download Generated Files")
 
-        for filename, content in files.items():
-            st.download_button(
-                label=f"Download {filename}",
-                data=content,
-                file_name=filename,
-            )
+        st.download_button(
+            label="Download Project (.zip)",
+            data=zip_bytes,
+            file_name=f"{api_name.lower().replace(' ', '_')}.zip",
+            mime="application/zip",
+        )
 
         st.divider()
 
