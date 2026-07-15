@@ -65,7 +65,25 @@ if generate:
 
         st.success("Bronze pipeline generated successfully!")
 
-        st.json(response)
+        st.header("Summary")
+        st.write(response["summary"])
+
+        st.header("Python Code")
+        st.code(response["python_code"], language="python")
+
+        st.header("SQL Code")
+        st.code(response["sql_code"], language="sql")
+
+        st.header("Folder Structure")
+        st.code(response["folder_structure"])
+
+        st.header("Quality Rules")
+        for rule in response["quality_rules"]:
+            st.write(f"• {rule}")
+
+        st.header("Assumptions")
+        for assumption in response["assumptions"]:
+            st.write(f"• {assumption}")
 
     except json.JSONDecodeError:
         st.error("Sample Response must be valid JSON.")
