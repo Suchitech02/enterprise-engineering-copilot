@@ -9,7 +9,10 @@ class BronzeService:
     """Service responsible for Bronze AI orchestration."""
 
     def __init__(self, llm: BaseLLMClient | None = None) -> None:
-        self.llm = llm 
+        if llm is None:
+            llm = get_llm()
+
+        self.llm = llm
 
     def generate(
         self,

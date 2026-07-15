@@ -57,3 +57,13 @@ def test_generate_bronze_pipeline():
     assert response.assumptions == [
         "Assumption One",
     ]
+
+def test_bronze_service_uses_factory(monkeypatch):
+    monkeypatch.setattr(
+        "copilot.services.bronze_service.get_llm",
+        lambda: FakeLLM(),
+    )
+
+    service = BronzeService()
+
+    assert isinstance(service.llm, FakeLLM)
