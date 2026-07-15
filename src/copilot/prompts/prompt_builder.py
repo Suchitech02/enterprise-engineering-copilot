@@ -24,18 +24,18 @@ User request:
 {user_prompt}
 """
 
-@staticmethod
-def build_bronze_prompt(
-    api_name: str,
-    endpoint: str,
-    authentication: str,
-    description: str,
-    sample_response: dict,
-) -> str:
-    """Build a prompt for generating a Databricks Bronze ingestion pipeline."""
+    @staticmethod
+    def build_bronze_prompt(
+        api_name: str,
+        endpoint: str,
+        authentication: str,
+        description: str,
+        sample_response: dict,
+    ) -> str:
+        """Build a prompt for generating a Databricks Bronze ingestion pipeline."""
 
-    return f"""
-You are Senior Enterprise Data Engineer.
+        return f"""
+You are a Senior Enterprise Data Engineer.
 
 Generate a production-ready Databricks Bronze ingestion pipeline.
 

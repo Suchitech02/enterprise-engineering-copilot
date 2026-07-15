@@ -18,4 +18,4 @@ def generate_bronze(
     request: BronzeGenerationRequest,
 ) -> BronzeGenerationResponse:
     """Generate Bronze Ingestion Pipelines."""
-    return service.generate()
+    return service.generate(request)
