@@ -90,36 +90,53 @@ if generate:
 
         st.success("Bronze pipeline generated successfully!")
 
-        st.header("Summary")
-        st.write(bronze_response.summary)
+        summary_tab, python_tab, sql_tab, folder_tab, quality_tab, assumptions_tab = st.tabs(
+            [
+                "Summary",
+                "Python",
+                "SQL",
+                "Folder Structure",
+                "Quality Rules",
+                "Assumptions",
+            ]
+        )
 
-        st.divider()
+        with summary_tab:
+            st.header("Summary")
+            st.write(bronze_response.summary)
 
-        st.header("Python Code")
-        st.code(bronze_response.python_code, language="python")
-
-        st.divider()
-
-        st.header("SQL Code")
-        st.code(bronze_response.sql_code, language="sql")
-
-        st.divider()
-
-        st.header("Folder Structure")
-        st.code(bronze_response.folder_structure)
-
-        st.divider()
-
-        st.header("Quality Rules")
-        for rule in bronze_response.quality_rules:
-            st.write(f"• {rule}")
-
-        st.divider()
-
-        st.header("Assumptions")
-        for assumption in bronze_response.assumptions:
-            st.write(f"• {assumption}")
+            st.divider()
         
+        with python_tab:
+            st.header("Python Code")
+            st.code(bronze_response.python_code, language="python")
+
+            st.divider()
+
+        with sql_tab:
+            st.header("SQL Code")
+            st.code(bronze_response.sql_code, language="sql")
+
+            st.divider()
+
+        with folder_tab:
+            st.header("Folder Structure")
+            st.code(bronze_response.folder_structure)
+
+            st.divider()
+
+        with quality_tab:
+            st.header("Quality Rules")
+            for rule in bronze_response.quality_rules:
+                st.write(f"• {rule}")
+
+            st.divider()
+
+        with assumptions_tab:
+            st.header("Assumptions")
+            for assumption in bronze_response.assumptions:
+                st.write(f"• {assumption}")
+            
         st.divider()
 
         st.subheader("Download Generated Files")
