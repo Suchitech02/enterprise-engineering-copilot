@@ -5,7 +5,7 @@ from copilot.prompts.prompt_builder import PromptBuilder
 class BronzeService:
     """Service responsible for Bronze AI orchestration."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.llm = get_llm()
 
     def generate(
@@ -13,10 +13,6 @@ class BronzeService:
         request: BronzeGenerationRequest,
     ) -> BronzeGenerationResponse:
         """Generate Bronze Ingestion Pipelines."""
-
-        print("========== Bronze Generator ==========")
-
-        print("Step 1 - Building prompt")
 
         prompt = PromptBuilder.build_bronze_prompt(
             api_name=request.api_name,
@@ -26,16 +22,13 @@ class BronzeService:
             sample_response=request.sample_response
         )
 
-        print("✅ Step 2 - Prompt built")
-        print(f"Prompt length: {len(prompt)} characters")
-
-        print("Step 3 - Calling Ollama...")
-
         answer = self.llm.generate(prompt)
 
-        print("✅ Step 4 - Ollama returned")
-        print(f"Response length: {len(answer)}")
-
         return BronzeGenerationResponse(
-            explanation=answer
+            summary=f"Bronze pipeline generated for {request.api_name}",
+            python_code=answer,
+            sql_code="",
+            folder_structure="",
+            quality_rules="",
+            assumptions=""
         )

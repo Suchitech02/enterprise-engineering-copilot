@@ -12,7 +12,6 @@ class BronzeGenerationRequest(BaseModel):
 
 
 class BronzeGenerationResponse(BaseModel):
-
     """Response model for Bronze AI generation."""
     summary: str
     python_code: str
@@ -20,5 +19,3 @@ class BronzeGenerationResponse(BaseModel):
     folder_structure: str
     quality_rules: str
     assumptions: str
-    
-
