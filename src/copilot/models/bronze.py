@@ -17,5 +17,5 @@ class BronzeGenerationResponse(BaseModel):
     python_code: str
     sql_code: str
     folder_structure: str
-    quality_rules: str
-    assumptions: str
+    quality_rules: list[str]
+    assumptions: list[str]

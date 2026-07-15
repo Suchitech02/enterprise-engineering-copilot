@@ -1,6 +1,8 @@
 from copilot.llm.factory import get_llm
 from copilot.models.bronze import BronzeGenerationRequest, BronzeGenerationResponse
 from copilot.prompts.prompt_builder import PromptBuilder
+from copilot.parsers.bronze_parser import BronzeParser
+
 
 class BronzeService:
     """Service responsible for Bronze AI orchestration."""
@@ -24,11 +26,4 @@ class BronzeService:
 
         answer = self.llm.generate(prompt)
 
-        return BronzeGenerationResponse(
-            summary=f"Bronze pipeline generated for {request.api_name}",
-            python_code=answer,
-            sql_code="",
-            folder_structure="",
-            quality_rules="",
-            assumptions=""
-        )
+        return BronzeParser.parse(answer)
