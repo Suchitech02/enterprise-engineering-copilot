@@ -13,5 +13,5 @@ class BronzeGenerationRequest(BaseModel):
 
 class BronzeGenerationResponse(BaseModel):
     """Response model for Bronze AI generation."""
-    explaination: str
+    explanation: str
 
