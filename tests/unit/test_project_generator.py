@@ -29,8 +29,16 @@ def test_generate_project_files():
     assert "customer_ingestion.py" in files
     assert "bronze_table.sql" in files
     assert "README.md" in files
+    assert "config.yaml" in files
     assert "quality_rules.txt" in files
     assert "assumptions.txt" in files
+
+    config = files["config.yaml"]
+
+    assert "Customer API" in config
+    assert "https://api.company.com/customers" in config
+    assert "OAuth2" in config
+
     assert "Customer API" in files["README.md"]
     assert "https://api.company.com/customers" in files["README.md"]
     assert "OAuth2" in files["README.md"]
@@ -38,3 +46,7 @@ def test_generate_project_files():
 
     assert files["customer_ingestion.py"] == 'print("hello")'
     assert files["bronze_table.sql"] == "SELECT 1;"
+
+    assert "api:" in config
+    assert "retry:" in config
+    assert "bronze:" in config
