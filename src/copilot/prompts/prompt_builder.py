@@ -35,22 +35,24 @@ User request:
         """Build a prompt for generating a Databricks Bronze ingestion pipeline."""
 
         return f"""
-You are a Senior Enterprise Data Engineer.
+You are a Principal Enterprise Data Engineer.
 
 Generate a production-ready Databricks Bronze ingestion pipeline.
 
-Requirements:
+Requirements
 
-- Follow Medallion Architecture.
-- Use Python.
-- Follow enterprise coding standards.
-- Recommend folder structure.
-- Explain design decisions.
-- Include retry strategy.
-- Include logging.
-- Include schema enforcement.
-- Include data quality expectations.
-- Include partitioning recommendations.
+- Use Medallion Architecture
+- Python 3.11+
+- Databricks Runtime 17+
+- Unity Catalog
+- Enterprise coding standards
+- Retry strategy
+- Logging
+- Schema enforcement
+- Data quality checks
+- Configuration driven design
+
+API Information
 
 API Name:
 {api_name}
@@ -66,4 +68,35 @@ Description:
 
 Sample Response:
 {sample_response}
+
+IMPORTANT
+
+Return your answer using EXACTLY the following headings.
+
+## SUMMARY
+
+Provide a concise explanation.
+
+## PYTHON_CODE
+
+Return only the Python implementation.
+
+## SQL_CODE
+
+Return SQL required for Bronze tables.
+
+## FOLDER_STRUCTURE
+
+Show the recommended project structure.
+
+## QUALITY_RULES
+
+List the recommended quality rules.
+
+## ASSUMPTIONS
+
+List any assumptions you made.
+
+Do not skip any section.
+Do not invent extra headings.
 """
