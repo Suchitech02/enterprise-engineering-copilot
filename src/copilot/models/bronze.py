@@ -12,6 +12,13 @@ class BronzeGenerationRequest(BaseModel):
 
 
 class BronzeGenerationResponse(BaseModel):
+
     """Response model for Bronze AI generation."""
-    explanation: str
+    summary: str
+    python_code: str
+    sql_code: str
+    folder_structure: str
+    quality_rules: str
+    assumptions: str
+    
 
