@@ -61,3 +61,12 @@ def test_generate_project_files():
     assert "delta-spark" in requirements
     assert "streamlit" in requirements
     assert "fastapi" in requirements
+
+    assert "customer_ingestion.py" in files
+    assert "test_customer_ingestion.py" in files
+
+    test_file = files["test_customer_ingestion.py"]
+
+    assert "import pytest" in test_file
+    assert "assert True" in test_file
+    assert "test_customer_ingestion_placeholder" in test_file
