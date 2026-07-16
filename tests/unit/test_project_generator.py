@@ -50,3 +50,14 @@ def test_generate_project_files():
     assert "api:" in config
     assert "retry:" in config
     assert "bronze:" in config
+
+    assert "requirements.txt" in files
+
+    requirements = files["requirements.txt"]
+
+    assert "requests" in requirements
+    assert "pydantic" in requirements
+    assert "pyspark" in requirements
+    assert "delta-spark" in requirements
+    assert "streamlit" in requirements
+    assert "fastapi" in requirements
