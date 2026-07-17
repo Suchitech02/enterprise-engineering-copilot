@@ -3,14 +3,18 @@ import json
 import streamlit as st
 
 from copilot.generator.project_generator import ProjectGenerator
+from copilot.generator.zip_generator import ZipGenerator
 from copilot.models.bronze import (
     BronzeGenerationRequest,
     BronzeGenerationResponse,
 )
+from copilot.services.test_generation_service import UnitTestGenerationService
 from copilot.ui.client import CopilotClient
-from copilot.generator.zip_generator import ZipGenerator
+
 
 client = CopilotClient()
+
+test_service = UnitTestGenerationService()
 
 st.set_page_config(
     page_title="Enterprise Engineering Copilot",
@@ -73,6 +77,10 @@ if generate:
 
         bronze_response = BronzeGenerationResponse(**response)
 
+        generated_test = test_service.generate(
+            bronze_response.python_code,
+        )
+
         request = BronzeGenerationRequest(
             api_name=api_name,
             endpoint=endpoint,
@@ -82,8 +90,9 @@ if generate:
         )
 
         files = ProjectGenerator.generate_files(
-            request,
-            bronze_response,
+            request=request,
+            response=bronze_response,
+            generated_test=generated_test,
         )
 
         zip_bytes = ZipGenerator.generate_zip(files)
@@ -104,55 +113,49 @@ if generate:
         with summary_tab:
             st.header("Summary")
             st.write(bronze_response.summary)
-
-            st.divider()
         
         with python_tab:
             st.header("Python Code")
             st.code(bronze_response.python_code, language="python")
 
-            st.divider()
-
         with sql_tab:
             st.header("SQL Code")
             st.code(bronze_response.sql_code, language="sql")
 
-            st.divider()
-
         with folder_tab:
             st.header("Folder Structure")
-            st.code(bronze_response.folder_structure)
-
-            st.divider()
+            st.code(
+                bronze_response.folder_structure,
+                language="text",
+            )
 
         with quality_tab:
             st.header("Quality Rules")
             for rule in bronze_response.quality_rules:
                 st.write(f"• {rule}")
 
-            st.divider()
-
         with assumptions_tab:
             st.header("Assumptions")
             for assumption in bronze_response.assumptions:
                 st.write(f"• {assumption}")
-            
-        st.divider()
+
+        zip_name = (
+            api_name.strip().lower().replace(" ", "_")
+            or "bronze_pipeline"
+        )
 
         st.subheader("Download Generated Files")
 
         st.download_button(
             label="Download Project (.zip)",
             data=zip_bytes,
-            file_name=f"{api_name.lower().replace(' ', '_')}.zip",
+            file_name=f"{zip_name}.zip",
             mime="application/zip",
         )
-
-        st.divider()
 
     except json.JSONDecodeError:
         st.error("Sample Response must be valid JSON.")
 
-    except Exception as ex:
+    except Exception as exc:
         
-        st.error(f"Failed to generate Bronze pipeline: {ex}")
+        st.error(f"Failed to generate Bronze pipeline: {exc}")
