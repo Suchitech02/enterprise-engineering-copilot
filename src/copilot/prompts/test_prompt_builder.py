@@ -5,12 +5,13 @@ class TestPromptBuilder:
     def build_test_prompt(
         python_code: str,
     ) -> str:
-         """Build the LLM prompt for generating pytest tests."""
-        
-         return f"""
+        """Build the LLM prompt for generating pytest tests."""
+
+        return f"""
 You are a Senior Python Test Engineer.
 
-Generate production-quality pytest unit tests for the following Databricks Bronze ingestion pipeline.
+Generate production-quality pytest unit tests
+for the following Databricks Bronze ingestion pipeline.
 
 Requirements:
 

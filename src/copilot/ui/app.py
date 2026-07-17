@@ -11,7 +11,6 @@ from copilot.models.bronze import (
 from copilot.services.test_generation_service import UnitTestGenerationService
 from copilot.ui.client import CopilotClient
 
-
 client = CopilotClient()
 
 test_service = UnitTestGenerationService()
@@ -26,7 +25,6 @@ st.title("Enterprise Engineering Copilot")
 st.subheader("Generate Databricks Bronze Ingestion Pipelines")
 
 with st.form(key="bronze_generation_form"):
-
     api_name = st.text_input(
         "API Name",
         placeholder="Customer API",
@@ -62,9 +60,7 @@ with st.form(key="bronze_generation_form"):
 
 
 if generate:
-
     try:
-
         parsed_json = json.loads(sample_response)
 
         response = client.generate_bronze(
@@ -113,7 +109,7 @@ if generate:
         with summary_tab:
             st.header("Summary")
             st.write(bronze_response.summary)
-        
+
         with python_tab:
             st.header("Python Code")
             st.code(bronze_response.python_code, language="python")
@@ -139,10 +135,7 @@ if generate:
             for assumption in bronze_response.assumptions:
                 st.write(f"• {assumption}")
 
-        zip_name = (
-            api_name.strip().lower().replace(" ", "_")
-            or "bronze_pipeline"
-        )
+        zip_name = api_name.strip().lower().replace(" ", "_") or "bronze_pipeline"
 
         st.subheader("Download Generated Files")
 
@@ -157,5 +150,4 @@ if generate:
         st.error("Sample Response must be valid JSON.")
 
     except Exception as exc:
-        
         st.error(f"Failed to generate Bronze pipeline: {exc}")
