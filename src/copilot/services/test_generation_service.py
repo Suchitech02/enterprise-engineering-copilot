@@ -22,4 +22,27 @@ class UnitTestGenerationService:
             python_code,
         )
 
-        return self.llm.generate(prompt)
+        result = self.llm.generate(prompt)
+
+        result = (
+            result
+            .replace("```python", "")
+            .replace("```", "")
+            .strip()
+        )
+
+        # Keep only the Python code starting at the first import
+        positions = [
+            pos
+            for pos in (
+                result.find("import "),
+                result.find("from "),
+            )
+            if pos != -1
+        ]
+
+        if positions:
+            first_import = min(positions)
+            result = result[first_import:]
+
+        return result.strip()
