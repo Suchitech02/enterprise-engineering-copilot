@@ -6,7 +6,6 @@ from copilot.models.bronze import (
 
 
 def test_generate_project_files():
-
     request = BronzeGenerationRequest(
         api_name="Customer API",
         endpoint="https://api.company.com/customers",
@@ -36,7 +35,12 @@ def test_example():
         generated_test=generated_test,
     )
 
-    pipeline_name = request.api_name.strip().lower().replace(" api", "").replace(" ", "_")
+    pipeline_name = (
+        request.api_name.strip()
+        .lower()
+        .replace(" api", "")
+        .replace(" ", "_")
+    )
 
     # ------------------------------------------------------------------
     # Generated files
@@ -45,17 +49,13 @@ def test_example():
     assert f"{pipeline_name}/pyproject.toml" in files
     assert f"{pipeline_name}/requirements.txt" in files
     assert f"{pipeline_name}/.gitignore" in files
+    assert f"{pipeline_name}/.github/workflows/ci.yml" in files
 
     assert f"{pipeline_name}/src/{pipeline_name}_ingestion.py" in files
-
     assert f"{pipeline_name}/tests/test_{pipeline_name}_ingestion.py" in files
-
     assert f"{pipeline_name}/sql/bronze_table.sql" in files
-
     assert f"{pipeline_name}/config/config.yaml" in files
-
     assert f"{pipeline_name}/config/quality_rules.txt" in files
-
     assert f"{pipeline_name}/config/assumptions.txt" in files
 
     # ------------------------------------------------------------------
@@ -67,16 +67,23 @@ def test_example():
     assert "https://api.company.com/customers" in readme
     assert "OAuth2" in readme
     assert "Returns customer master data" in readme
+    assert ".github/workflows/ci.yml" in readme
 
     # ------------------------------------------------------------------
     # Generated Python code
     # ------------------------------------------------------------------
-    assert files[f"{pipeline_name}/src/{pipeline_name}_ingestion.py"] == 'print("hello")'
+    assert (
+        files[f"{pipeline_name}/src/{pipeline_name}_ingestion.py"]
+        == 'print("hello")'
+    )
 
     # ------------------------------------------------------------------
     # Generated SQL
     # ------------------------------------------------------------------
-    assert files[f"{pipeline_name}/sql/bronze_table.sql"] == "SELECT 1;"
+    assert (
+        files[f"{pipeline_name}/sql/bronze_table.sql"]
+        == "SELECT 1;"
+    )
 
     # ------------------------------------------------------------------
     # Config
@@ -114,7 +121,7 @@ def test_example():
     assert "pytest" in requirements
 
     # ------------------------------------------------------------------
-    # Gitignore
+    # .gitignore
     # ------------------------------------------------------------------
     gitignore = files[f"{pipeline_name}/.gitignore"]
 
@@ -124,9 +131,30 @@ def test_example():
     assert ".env" in gitignore
 
     # ------------------------------------------------------------------
-    # Generated test
+    # GitHub Actions
     # ------------------------------------------------------------------
-    test_file = files[f"{pipeline_name}/tests/test_{pipeline_name}_ingestion.py"]
+    ci_workflow_path = (
+        f"{pipeline_name}/.github/workflows/ci.yml"
+    )
+
+    assert ci_workflow_path in files
+
+    ci_workflow = files[ci_workflow_path]
+
+    assert "name: CI" in ci_workflow
+    assert "actions/checkout" in ci_workflow
+    assert "actions/setup-python" in ci_workflow
+    assert 'python-version: "3.11"' in ci_workflow
+    assert "pip install -r requirements.txt" in ci_workflow
+    assert "Run tests" in ci_workflow
+    assert "pytest" in ci_workflow
+
+    # ------------------------------------------------------------------
+    # Generated tests
+    # ------------------------------------------------------------------
+    test_file = files[
+        f"{pipeline_name}/tests/test_{pipeline_name}_ingestion.py"
+    ]
 
     assert test_file == generated_test
     assert "import pytest" in test_file
@@ -136,9 +164,13 @@ def test_example():
     # ------------------------------------------------------------------
     # Supporting files
     # ------------------------------------------------------------------
-    quality_rules = files[f"{pipeline_name}/config/quality_rules.txt"]
+    quality_rules = files[
+        f"{pipeline_name}/config/quality_rules.txt"
+    ]
 
-    assumptions = files[f"{pipeline_name}/config/assumptions.txt"]
+    assumptions = files[
+        f"{pipeline_name}/config/assumptions.txt"
+    ]
 
     assert "Rule One" in quality_rules
     assert "Rule Two" in quality_rules
