@@ -24,12 +24,7 @@ class UnitTestGenerationService:
 
         result = self.llm.generate(prompt)
 
-        result = (
-            result
-            .replace("```python", "")
-            .replace("```", "")
-            .strip()
-        )
+        result = result.replace("```python", "").replace("```", "").strip()
 
         # Keep only the Python code starting at the first import
         positions = [
