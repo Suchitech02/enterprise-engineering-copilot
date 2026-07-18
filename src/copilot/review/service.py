@@ -11,13 +11,13 @@ class ReviewService:
 
     def __init__(self, llm: BaseLLMClient):
         self.llm = llm
-  
+
     def review(
-            self,
-            request: ReviewRequest,
+        self,
+        request: ReviewRequest,
     ) -> ReviewResponse:
         """Review a source code snippet using the configured LLM."""
-        
+
         prompt = build_review_prompt(
             request.language,
             request.code,
@@ -34,4 +34,3 @@ class ReviewService:
             raise ValueError("LLM returned invalid JSON") from exc
 
         return ReviewResponse.model_validate(parsed)
-        
