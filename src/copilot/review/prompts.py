@@ -62,6 +62,7 @@ Rules:
 - If no issues are found, return an empty findings array.
 """
 
+
 def build_review_prompt(language: str, code: str) -> str:
     return f"""
 Language:

@@ -12,6 +12,7 @@ def get_review_service() -> ReviewService:
     llm = get_llm()
     return ReviewService(llm)
 
+
 @router.post("", response_model=ReviewResponse)
 def review(
     request: ReviewRequest,
