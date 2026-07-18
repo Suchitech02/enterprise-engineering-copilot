@@ -3,8 +3,8 @@ from fastapi import FastAPI
 from copilot.api.routes.bronze import router as bronze_router
 from copilot.api.routes.generate import router as generate_router
 from copilot.api.routes.health import router as health_router
-from copilot.api.routes.root import router as root_router
 from copilot.api.routes.review import router as review_router
+from copilot.api.routes.root import router as root_router
 
 
 def create_app() -> FastAPI:

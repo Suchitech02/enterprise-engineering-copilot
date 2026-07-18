@@ -5,6 +5,7 @@ from copilot.llm.base import BaseLLMClient
 from .models import ReviewRequest, ReviewResponse
 from .prompts import SYSTEM_PROMPT, build_review_prompt
 
+
 class ReviewService:
     """Coordinates AI-powered code reviews."""
 

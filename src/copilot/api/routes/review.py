@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 
+from copilot.llm.factory import get_llm
 from copilot.review.models import ReviewRequest, ReviewResponse
 from copilot.review.service import ReviewService
-from copilot.llm.factory import get_llm
 
 router = APIRouter(prefix="/review", tags=["AI Code Review"])
 

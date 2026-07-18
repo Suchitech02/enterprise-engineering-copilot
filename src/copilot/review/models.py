@@ -2,6 +2,7 @@ from enum import Enum
 
 from pydantic import BaseModel
 
+
 class Severity(str, Enum):
     low = "low"
     medium = "medium"
