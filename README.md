@@ -80,3 +80,23 @@ Format the code:
 ```bash
 make format
 ```
+
+## Running with Docker
+
+### Build
+
+```bash
+docker build -t enterprise-engineering-copilot .
+```
+
+### Run
+
+```bash
+docker run -p 8000:8000 enterprise-engineering-copilot
+```
+
+Open:
+
+```
+http://localhost:8000/docs
+```
