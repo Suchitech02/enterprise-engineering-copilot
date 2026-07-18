@@ -7,14 +7,14 @@ class CopilotClient:
     BASE_URL = "http://127.0.0.1:8000"
 
     def generate_bronze(
-            self,
-            api_name: str,
-            endpoint: str,
-            authentication: str,
-            description: str,
-            sample_response: dict,
+        self,
+        api_name: str,
+        endpoint: str,
+        authentication: str,
+        description: str,
+        sample_response: dict,
     ) -> dict:
-        
+
         response = requests.post(
             f"{self.BASE_URL}/bronze/generate",
             json={

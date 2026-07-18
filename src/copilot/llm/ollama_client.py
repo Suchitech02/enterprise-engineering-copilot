@@ -1,5 +1,7 @@
 from ollama import Client
+
 from copilot.llm.base import BaseLLMClient
+
 
 class OllamaClient(BaseLLMClient):
     """Ollama implementation."""

@@ -1,23 +1,20 @@
 from fastapi import APIRouter
 
-from copilot.models.generate import (
-    GenerateResponse,
-    GenerateRequest)
-
+from copilot.models.generate import GenerateRequest, GenerateResponse
 from copilot.services.assistant_service import AssistantService
 
 router = APIRouter()
 
 assistant = AssistantService()
 
+
 @router.post(
-    "/generate", 
+    "/generate",
     response_model=GenerateResponse,
 )
-
 def generate(
     request: GenerateRequest,
-    ) -> GenerateResponse:
+) -> GenerateResponse:
     """Generate AI response."""
 
     return assistant.generate(request.prompt)

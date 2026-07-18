@@ -58,6 +58,7 @@ def test_generate_bronze_pipeline():
         "Assumption One",
     ]
 
+
 def test_bronze_service_uses_factory(monkeypatch):
     monkeypatch.setattr(
         "copilot.services.bronze_service.get_llm",

@@ -3,6 +3,7 @@ from io import BytesIO
 
 from copilot.generator.zip_generator import ZipGenerator
 
+
 def test_generate_zip():
 
     files = {

@@ -15,12 +15,7 @@ class ProjectGenerator:
     ) -> dict[str, str]:
         """Return generated project files."""
 
-        pipeline_name = (
-            request.api_name.strip()
-            .lower()
-            .replace(" api", "")
-            .replace(" ", "_")
-        )
+        pipeline_name = request.api_name.strip().lower().replace(" api", "").replace(" ", "_")
 
         if not pipeline_name:
             pipeline_name = "bronze_pipeline"
@@ -171,10 +166,6 @@ jobs:
             f"{project_root}/tests/{test_file_name}": generated_test,
             f"{project_root}/sql/bronze_table.sql": response.sql_code,
             f"{project_root}/config/config.yaml": config,
-            f"{project_root}/config/quality_rules.txt": "\n".join(
-                response.quality_rules
-            ),
-            f"{project_root}/config/assumptions.txt": "\n".join(
-                response.assumptions
-            ),
+            f"{project_root}/config/quality_rules.txt": "\n".join(response.quality_rules),
+            f"{project_root}/config/assumptions.txt": "\n".join(response.assumptions),
         }
