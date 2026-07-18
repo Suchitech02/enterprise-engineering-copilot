@@ -32,3 +32,6 @@ jobs:
 
       - name: Run tests
         run: uv run pytest
+
+      - name: Build Docker image
+        run: docker build -t enterprise-engineering-copilot .
