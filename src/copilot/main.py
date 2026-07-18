@@ -4,6 +4,7 @@ from copilot.api.routes.bronze import router as bronze_router
 from copilot.api.routes.generate import router as generate_router
 from copilot.api.routes.health import router as health_router
 from copilot.api.routes.root import router as root_router
+from copilot.api.routes.review import router as review_router
 
 
 def create_app() -> FastAPI:
@@ -15,6 +16,7 @@ def create_app() -> FastAPI:
     app.include_router(health_router)
     app.include_router(generate_router)
     app.include_router(bronze_router)
+    app.include_router(review_router)
 
     return app
 
