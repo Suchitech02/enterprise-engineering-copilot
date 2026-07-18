@@ -1,16 +1,12 @@
 from copilot.models.bronze import BronzeGenerationResponse
 
+
 class BronzeParser:
     """Parser for Bronze Generation Responses."""
 
     @staticmethod
     def clean_code_block(content: str, language: str) -> str:
-        return (
-            content
-            .replace(f"```{language}", "")
-            .replace("```", "")
-            .strip()
-        )
+        return content.replace(f"```{language}", "").replace("```", "").strip()
 
     @staticmethod
     def parse_list(content: str) -> list[str]:
@@ -45,11 +41,7 @@ class BronzeParser:
                     sections[current_section] = "\n".join(current_content).strip()
 
                 current_section = (
-                    line.replace("## ", "")
-                        .strip()
-                        .rstrip(":")
-                        .upper()
-                        .replace(" ", "_")
+                    line.replace("## ", "").strip().rstrip(":").upper().replace(" ", "_")
                 )
                 current_content = []
             else:
@@ -78,10 +70,6 @@ class BronzeParser:
             python_code=python_code,
             sql_code=sql_code,
             folder_structure=sections.get("FOLDER_STRUCTURE", ""),
-            quality_rules=BronzeParser.parse_list(
-                sections.get("QUALITY_RULES", "")
-            ),
-            assumptions=BronzeParser.parse_list(
-                sections.get("ASSUMPTIONS", "")
-            ),
+            quality_rules=BronzeParser.parse_list(sections.get("QUALITY_RULES", "")),
+            assumptions=BronzeParser.parse_list(sections.get("ASSUMPTIONS", "")),
         )

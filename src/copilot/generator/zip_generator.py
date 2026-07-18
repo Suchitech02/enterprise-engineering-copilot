@@ -1,6 +1,7 @@
 import io
 import zipfile
 
+
 class ZipGenerator:
     """Generate Zip Archives for project files."""
 
@@ -18,13 +19,12 @@ class ZipGenerator:
             mode="w",
             compression=zipfile.ZIP_DEFLATED,
         ) as archives:
-            
             for filename, content in files.items():
                 archives.writestr(
-                    filename, 
+                    filename,
                     content,
                 )
-        
+
         buffer.seek(0)
 
         return buffer.getvalue()

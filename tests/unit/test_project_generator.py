@@ -35,12 +35,7 @@ def test_example():
         generated_test=generated_test,
     )
 
-    pipeline_name = (
-        request.api_name.strip()
-        .lower()
-        .replace(" api", "")
-        .replace(" ", "_")
-    )
+    pipeline_name = request.api_name.strip().lower().replace(" api", "").replace(" ", "_")
 
     # ------------------------------------------------------------------
     # Generated files
@@ -72,18 +67,12 @@ def test_example():
     # ------------------------------------------------------------------
     # Generated Python code
     # ------------------------------------------------------------------
-    assert (
-        files[f"{pipeline_name}/src/{pipeline_name}_ingestion.py"]
-        == 'print("hello")'
-    )
+    assert files[f"{pipeline_name}/src/{pipeline_name}_ingestion.py"] == 'print("hello")'
 
     # ------------------------------------------------------------------
     # Generated SQL
     # ------------------------------------------------------------------
-    assert (
-        files[f"{pipeline_name}/sql/bronze_table.sql"]
-        == "SELECT 1;"
-    )
+    assert files[f"{pipeline_name}/sql/bronze_table.sql"] == "SELECT 1;"
 
     # ------------------------------------------------------------------
     # Config
@@ -133,9 +122,7 @@ def test_example():
     # ------------------------------------------------------------------
     # GitHub Actions
     # ------------------------------------------------------------------
-    ci_workflow_path = (
-        f"{pipeline_name}/.github/workflows/ci.yml"
-    )
+    ci_workflow_path = f"{pipeline_name}/.github/workflows/ci.yml"
 
     assert ci_workflow_path in files
 
@@ -152,9 +139,7 @@ def test_example():
     # ------------------------------------------------------------------
     # Generated tests
     # ------------------------------------------------------------------
-    test_file = files[
-        f"{pipeline_name}/tests/test_{pipeline_name}_ingestion.py"
-    ]
+    test_file = files[f"{pipeline_name}/tests/test_{pipeline_name}_ingestion.py"]
 
     assert test_file == generated_test
     assert "import pytest" in test_file
@@ -164,13 +149,9 @@ def test_example():
     # ------------------------------------------------------------------
     # Supporting files
     # ------------------------------------------------------------------
-    quality_rules = files[
-        f"{pipeline_name}/config/quality_rules.txt"
-    ]
+    quality_rules = files[f"{pipeline_name}/config/quality_rules.txt"]
 
-    assumptions = files[
-        f"{pipeline_name}/config/assumptions.txt"
-    ]
+    assumptions = files[f"{pipeline_name}/config/assumptions.txt"]
 
     assert "Rule One" in quality_rules
     assert "Rule Two" in quality_rules

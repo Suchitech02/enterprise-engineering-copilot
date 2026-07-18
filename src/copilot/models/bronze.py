@@ -2,8 +2,10 @@ from typing import Any
 
 from pydantic import BaseModel
 
+
 class BronzeGenerationRequest(BaseModel):
     """Request model for Bronze AI generation."""
+
     api_name: str
     endpoint: str
     authentication: str
@@ -13,6 +15,7 @@ class BronzeGenerationRequest(BaseModel):
 
 class BronzeGenerationResponse(BaseModel):
     """Response model for Bronze AI generation."""
+
     summary: str
     python_code: str
     sql_code: str

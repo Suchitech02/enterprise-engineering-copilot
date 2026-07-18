@@ -1,8 +1,8 @@
 from copilot.llm.base import BaseLLMClient
 from copilot.llm.factory import get_llm
 from copilot.models.bronze import BronzeGenerationRequest, BronzeGenerationResponse
-from copilot.prompts.prompt_builder import PromptBuilder
 from copilot.parsers.bronze_parser import BronzeParser
+from copilot.prompts.prompt_builder import PromptBuilder
 
 
 class BronzeService:
@@ -25,7 +25,7 @@ class BronzeService:
             endpoint=request.endpoint,
             authentication=request.authentication,
             description=request.description,
-            sample_response=request.sample_response
+            sample_response=request.sample_response,
         )
 
         answer = self.llm.generate(prompt)
