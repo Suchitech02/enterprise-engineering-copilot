@@ -1,8 +1,7 @@
 import json
+from collections.abc import Iterator
 
 import pytest
-
-from collections.abc import Iterator
 
 from copilot.explain.models import ExplainRequest
 from copilot.explain.service import ExplainService

@@ -1,8 +1,7 @@
 import json
+from collections.abc import Iterator
 
 import pytest
-
-from collections.abc import Iterator
 
 from copilot.document.models import DocumentRequest
 from copilot.document.service import DocumentService

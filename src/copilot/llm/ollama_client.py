@@ -1,6 +1,7 @@
+from collections.abc import Iterator
+
 from ollama import Client
 
-from collections.abc import Iterator
 from copilot.llm.base import BaseLLMClient
 from copilot.llm.config import settings
 

@@ -1,6 +1,6 @@
-from openai import OpenAI
-
 from collections.abc import Iterator
+
+from openai import OpenAI
 
 from copilot.llm.base import BaseLLMClient
 from copilot.llm.config import settings

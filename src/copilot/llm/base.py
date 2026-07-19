@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterator
 
+
 class BaseLLMClient(ABC):
     """Abstract base class for all LLMs."""
 

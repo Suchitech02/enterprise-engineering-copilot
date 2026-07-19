@@ -1,8 +1,7 @@
 import json
+from collections.abc import Iterator
 
 import pytest
-
-from collections.abc import Iterator
 
 from copilot.llm.base import BaseLLMClient
 from copilot.review.models import ReviewRequest
