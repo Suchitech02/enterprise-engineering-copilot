@@ -100,3 +100,22 @@ List any assumptions you made.
 Do not skip any section.
 Do not invent extra headings.
 """
+
+    @staticmethod
+    def build_chat_prompt(
+        history: list[dict[str, str]],
+    ) -> str:
+        """Build a conversational prompt from the message history."""
+
+        conversation = "\n".join(
+            f"{message['role']}: {message['content']}"
+            for message in history
+        )
+
+        return f"""
+    You are Enterprise Engineering Copilot.
+
+    Continue the following conversation naturally.
+
+    {conversation}
+    """
