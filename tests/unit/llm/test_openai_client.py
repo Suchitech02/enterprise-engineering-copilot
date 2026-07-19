@@ -43,3 +43,68 @@ def test_generate_returns_response(mock_openai):
             },
         ],
     )
+    
+
+@patch("copilot.llm.openai_client.OpenAI")
+def test_stream_generate(mock_openai):
+    """Test that OpenAIClient streams the generated response."""
+
+    def mock_stream():
+        chunk1 = MagicMock()
+        chunk1.choices = [
+            MagicMock(
+                delta=MagicMock(content="Hello ")
+            )
+        ]
+
+        chunk2 = MagicMock()
+        chunk2.choices = [
+            MagicMock(
+                delta=MagicMock(content=None)
+            )
+        ]
+
+        chunk3 = MagicMock()
+        chunk3.choices = [
+            MagicMock(
+                delta=MagicMock(content="World")
+            )
+        ]
+
+        yield chunk1
+        yield chunk2
+        yield chunk3
+
+    client = MagicMock()
+    client.chat.completions.create.return_value = mock_stream()
+
+    mock_openai.return_value = client
+
+    llm = OpenAIClient()
+
+    result = list(
+        llm.stream_generate(
+            system_prompt="system",
+            user_prompt="user",
+        )
+    )
+
+    assert result == [
+        "Hello ",
+        "World",
+    ]
+
+    client.chat.completions.create.assert_called_once_with(
+        model=llm.model,
+        messages=[
+            {
+                "role": "system",
+                "content": "system",
+            },
+            {
+                "role": "user",
+                "content": "user",
+            },
+        ],
+        stream=True,
+    )

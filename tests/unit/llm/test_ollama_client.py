@@ -43,10 +43,12 @@ def test_generate_returns_response(mock_client):
 
 @patch("copilot.llm.ollama_client.Client")
 def test_stream_generate(mock_client):
+    """Test that OllamaClient streams the generated response."""
     client = MagicMock()
 
     client.chat.return_value = [
         {"message": {"content": "Hello "}},
+        {"message": {"content": ""}},
         {"message": {"content": "World"}},
     ]
 
