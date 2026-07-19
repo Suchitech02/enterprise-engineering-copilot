@@ -2,6 +2,8 @@ import json
 
 import pytest
 
+from collections.abc import Iterator
+
 from copilot.llm.base import BaseLLMClient
 from copilot.review.models import ReviewRequest
 from copilot.review.service import ReviewService
@@ -29,6 +31,13 @@ class MockLLMClient(BaseLLMClient):
                 ],
             }
         )
+    
+    def stream_generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> Iterator[str]:
+        yield self.generate(system_prompt, user_prompt)
 
 
 def test_review_service_returns_review_response():
@@ -61,6 +70,13 @@ class InvalidJsonLLM(BaseLLMClient):
         user_prompt: str,
     ) -> str:
         return "this is not valid json"
+    
+    def stream_generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> Iterator[str]:
+        yield self.generate(system_prompt, user_prompt)
 
 
 def test_review_service_raises_for_invalid_json():

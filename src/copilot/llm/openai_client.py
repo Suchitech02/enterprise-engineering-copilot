@@ -1,5 +1,7 @@
 from openai import OpenAI
 
+from collections.abc import Iterator
+
 from copilot.llm.base import BaseLLMClient
 from copilot.llm.config import settings
 
@@ -31,3 +33,31 @@ class OpenAIClient(BaseLLMClient):
         )
 
         return response.choices[0].message.content or ""
+    
+    def stream_generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> Iterator[str]:
+        """Generate streamed text from OpenAI."""
+
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt,
+                },
+                {
+                    "role": "user",
+                    "content": user_prompt,
+                },
+            ],
+            stream=True,
+        )
+
+        for chunk in response:
+            delta = chunk.choices[0].delta.content
+
+            if delta:
+                yield delta

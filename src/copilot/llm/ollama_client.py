@@ -1,5 +1,6 @@
 from ollama import Client
 
+from collections.abc import Iterator
 from copilot.llm.base import BaseLLMClient
 from copilot.llm.config import settings
 
@@ -29,3 +30,32 @@ class OllamaClient(BaseLLMClient):
         )
 
         return response["message"]["content"]
+    
+    def stream_generate(
+            self,
+            system_prompt: str,
+            user_prompt: str,
+    ) -> Iterator[str]:
+        """Generate streamed text from Ollama."""
+
+        stream = self.client.chat(
+            model=self.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt,
+                },
+                {
+                    "role": "user",
+                    "content": user_prompt,
+                }
+                
+            ],
+            stream= True,
+        )
+
+        for chunk in stream:
+            content = chunk["message"]["content"]
+
+            if content:
+                yield content

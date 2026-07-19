@@ -2,6 +2,8 @@ import json
 
 import pytest
 
+from collections.abc import Iterator
+
 from copilot.explain.models import ExplainRequest
 from copilot.explain.service import ExplainService
 from copilot.llm.base import BaseLLMClient
@@ -21,6 +23,13 @@ class MockLLMClient(BaseLLMClient):
                 "explanation": ("This function accepts two parameters and returns their sum."),
             }
         )
+    
+    def stream_generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> Iterator[str]:
+        yield self.generate(system_prompt, user_prompt)
 
 
 def test_explain_service_returns_explanation():
@@ -47,6 +56,13 @@ class InvalidJsonLLM(BaseLLMClient):
         user_prompt: str,
     ) -> str:
         return "this is not valid json"
+    
+    def stream_generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> Iterator[str]:
+        yield self.generate(system_prompt, user_prompt)
 
 
 def test_explain_service_raises_for_invalid_json():
