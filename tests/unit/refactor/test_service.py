@@ -1,4 +1,5 @@
 import json
+from collections.abc import Iterator
 
 import pytest
 
@@ -25,6 +26,13 @@ class MockLLMClient(BaseLLMClient):
                 ],
             }
         )
+    
+    def stream_generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> Iterator[str]:
+        yield self.generate(system_prompt, user_prompt)
 
 
 def test_refactor_service_returns_refactored_code():
@@ -57,6 +65,13 @@ class InvalidJsonLLM(BaseLLMClient):
         user_prompt: str,
     ) -> str:
         return "this is not valid json"
+    
+    def stream_generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> Iterator[str]:
+        yield self.generate(system_prompt, user_prompt)
 
 
 def test_refactor_service_raises_for_invalid_json():
