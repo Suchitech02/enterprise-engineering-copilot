@@ -119,3 +119,26 @@ Do not invent extra headings.
 
     {conversation}
     """
+
+    @staticmethod
+    def build_rag_prompt(
+        question: str,
+        documents: list[str],
+    ) -> str:
+        """Build a retrieval-augmented prompt."""
+
+        context = "\n\n".join(documents)
+
+        return f"""
+    You are Enterprise Engineering Copilot.
+
+    Use only the information provided in the context below to answer the user's question.
+
+    Context:
+    {context}
+
+    Question:
+    {question}
+
+    If the answer cannot be found in the context, say you don't know.
+    """

@@ -6,6 +6,8 @@ from copilot.memory.in_memory import InMemoryConversationStore
 from copilot.models.chat import ChatResponse
 from copilot.models.generate import GenerateResponse
 from copilot.prompts.prompt_builder import PromptBuilder
+from copilot.retrieval.base import BaseRetriever
+from copilot.retrieval.in_memory import InMemoryRetriever
 
 
 class AssistantService:
@@ -16,10 +18,17 @@ class AssistantService:
     def __init__(
         self,
         memory: BaseConversationStore | None = None,
+        retriever: BaseRetriever | None = None,
     ) -> None:
         self.llm = get_llm()
         self.memory: BaseConversationStore = (
             memory or InMemoryConversationStore()
+        )
+        self.retriever: BaseRetriever = (
+            retriever
+            or InMemoryRetriever(
+                documents=[],
+            )
         )
 
     def generate(
@@ -49,6 +58,31 @@ class AssistantService:
             system_prompt=self.SYSTEM_PROMPT,
             user_prompt=full_prompt,
         )
+
+    def retrieve_and_generate(
+        self,
+        question: str,
+    ) -> GenerateResponse:
+        """Generate a response using a retrieved context."""
+
+        documents = self.retriever.retrieve(
+            query=question,
+        )
+
+        prompt = PromptBuilder.build_rag_prompt(
+            question=question,
+            documents=documents,
+        )
+
+        response = self.llm.generate(
+            system_prompt = self.SYSTEM_PROMPT,
+            user_prompt = prompt,
+        )
+
+        return GenerateResponse(
+            response=response
+        )
+
 
     def chat(
         self,
