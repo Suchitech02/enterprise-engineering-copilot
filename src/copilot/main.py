@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 
-from copilot.api.routes.rag import router as rag_router
 from copilot.api.routes.bronze import router as bronze_router
 from copilot.api.routes.chat import router as chat_router
 from copilot.api.routes.document import router as document_router
 from copilot.api.routes.explain import router as explain_router
 from copilot.api.routes.generate import router as generate_router
 from copilot.api.routes.health import router as health_router
+from copilot.api.routes.rag import router as rag_router
 from copilot.api.routes.refactor import router as refactor_router
 from copilot.api.routes.review import router as review_router
 from copilot.api.routes.root import router as root_router

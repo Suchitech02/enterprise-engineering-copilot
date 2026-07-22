@@ -1,5 +1,7 @@
 from collections.abc import Iterator
+from pathlib import Path
 
+from copilot.knowledge.loader import DocumentLoader
 from copilot.llm.factory import get_llm
 from copilot.memory.base import BaseConversationStore
 from copilot.memory.in_memory import InMemoryConversationStore
@@ -15,6 +17,12 @@ class AssistantService:
 
     SYSTEM_PROMPT = "You are a helpful AI assistant."
 
+    loader = DocumentLoader()
+
+    documents = loader.load_documents(
+        Path("knowledge"),
+    )
+
     def __init__(
         self,
         memory: BaseConversationStore | None = None,
@@ -24,10 +32,15 @@ class AssistantService:
         self.memory: BaseConversationStore = (
             memory or InMemoryConversationStore()
         )
-        self.retriever: BaseRetriever = (
+        loader = DocumentLoader()
+
+        documents = loader.load_documents(
+            Path("knowledge"),
+        )
+        self.retriever = (
             retriever
             or InMemoryRetriever(
-                documents=[],
+                documents=documents,
             )
         )
 

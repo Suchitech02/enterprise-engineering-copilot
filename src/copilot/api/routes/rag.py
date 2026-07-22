@@ -4,7 +4,6 @@ from copilot.models.generate import GenerateResponse
 from copilot.models.rag import RagRequest
 from copilot.services.assistant_service import AssistantService
 
-
 router = APIRouter()
 
 assistant = AssistantService()
