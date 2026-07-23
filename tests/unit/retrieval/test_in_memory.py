@@ -1,4 +1,5 @@
 from copilot.retrieval.in_memory import InMemoryRetriever
+from copilot.vectorstore.in_memory import InMemoryVectorStore
 
 
 def test_retrieve_returns_documents():
@@ -6,10 +7,9 @@ def test_retrieve_returns_documents():
 
     retriever = InMemoryRetriever(
         documents=[
-            "Document 1",
-            "Document 2",
-            "Document 3",
-        ]
+            "Databricks",
+            "Apache Spark",
+        ],
     )
 
     results = retriever.retrieve(
@@ -17,9 +17,8 @@ def test_retrieve_returns_documents():
     )
 
     assert results == [
-        "Document 1",
-        "Document 2",
-        "Document 3",
+        "Databricks",
+        "Apache Spark",
     ]
 
 
@@ -32,7 +31,7 @@ def test_retrieve_respects_limit():
             "Document 2",
             "Document 3",
             "Document 4",
-        ]
+        ],
     )
 
     results = retriever.retrieve(
@@ -67,7 +66,7 @@ def test_retrieve_limit_greater_than_documents():
         documents=[
             "Document 1",
             "Document 2",
-        ]
+        ],
     )
 
     results = retriever.retrieve(
@@ -78,4 +77,25 @@ def test_retrieve_limit_greater_than_documents():
     assert results == [
         "Document 1",
         "Document 2",
+    ]
+
+
+def test_uses_injected_vector_store():
+    """Test that an injected vector store is used."""
+
+    vector_store = InMemoryVectorStore()
+
+    retriever = InMemoryRetriever(
+        documents=[
+            "Databricks",
+        ],
+        vector_store=vector_store,
+    )
+
+    results = retriever.retrieve(
+        query="Databricks",
+    )
+
+    assert results == [
+        "Databricks",
     ]
