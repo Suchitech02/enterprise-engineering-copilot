@@ -1,6 +1,5 @@
-from copilot.indexing.base import BaseIndexBuilder
-
 from copilot.embeddings.base import BaseEmbeddingModel
+from copilot.indexing.base import BaseIndexBuilder
 from copilot.vectorstore.base import BaseVectorStore
 
 
