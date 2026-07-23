@@ -1,5 +1,5 @@
-from copilot.indexing.builder import IndexBuilder
 from copilot.embeddings.mock_embedding import MockEmbeddingModel
+from copilot.indexing.builder import IndexBuilder
 from copilot.vectorstore.in_memory import InMemoryVectorStore
 
 
