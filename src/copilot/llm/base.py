@@ -13,7 +13,7 @@ class BaseLLMClient(ABC):
     ) -> str:
         """Generate text based on the given prompt."""
         raise NotImplementedError
-    
+
     @abstractmethod
     def stream_generate(
         self,

@@ -11,7 +11,7 @@ assistant = AssistantService()
 
 @router.post(
     "/rag",
-    response_model = GenerateResponse,
+    response_model=GenerateResponse,
 )
 def rag(
     request: RagRequest,

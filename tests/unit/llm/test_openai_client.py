@@ -43,7 +43,7 @@ def test_generate_returns_response(mock_openai):
             },
         ],
     )
-    
+
 
 @patch("copilot.llm.openai_client.OpenAI")
 def test_stream_generate(mock_openai):
@@ -51,25 +51,13 @@ def test_stream_generate(mock_openai):
 
     def mock_stream():
         chunk1 = MagicMock()
-        chunk1.choices = [
-            MagicMock(
-                delta=MagicMock(content="Hello ")
-            )
-        ]
+        chunk1.choices = [MagicMock(delta=MagicMock(content="Hello "))]
 
         chunk2 = MagicMock()
-        chunk2.choices = [
-            MagicMock(
-                delta=MagicMock(content=None)
-            )
-        ]
+        chunk2.choices = [MagicMock(delta=MagicMock(content=None))]
 
         chunk3 = MagicMock()
-        chunk3.choices = [
-            MagicMock(
-                delta=MagicMock(content="World")
-            )
-        ]
+        chunk3.choices = [MagicMock(delta=MagicMock(content="World"))]
 
         yield chunk1
         yield chunk2

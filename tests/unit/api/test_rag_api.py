@@ -12,10 +12,8 @@ client = TestClient(app)
 def test_rag_endpoint(mock_assistant):
     """Test the RAG endpoint."""
 
-    mock_assistant.retrieve_and_generate.return_value = (
-        GenerateResponse(
-            response="RAG response",
-        )
+    mock_assistant.retrieve_and_generate.return_value = GenerateResponse(
+        response="RAG response",
     )
 
     response = client.post(

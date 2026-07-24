@@ -1,20 +1,21 @@
 from copilot.embeddings.base import BaseEmbeddingModel
 from copilot.embeddings.mock_embedding import MockEmbeddingModel
 from copilot.indexing.builder import IndexBuilder
+from copilot.models.document import Document
 from copilot.retrieval.base import BaseRetriever
 from copilot.vectorstore.base import BaseVectorStore
 from copilot.vectorstore.in_memory import InMemoryVectorStore
 
 
 class InMemoryRetriever(BaseRetriever):
-
+    """Simple in-memory retriever."""
 
     def __init__(
         self,
-        documents: list[str],
+        documents: list[Document],
         embedding_model: BaseEmbeddingModel | None = None,
         vector_store: BaseVectorStore | None = None,
-    ):
+    ) -> None:
         self.embedding_model = (
             embedding_model
             or MockEmbeddingModel()
@@ -38,10 +39,11 @@ class InMemoryRetriever(BaseRetriever):
         self,
         query: str,
         limit: int = 5,
-    ) -> list[str]:
+    ) -> list[Document]:
+        """Retrieve the most relevant documents."""
 
         query_embedding = self.embedding_model.embed(
-            query
+            query,
         )
 
         return self.vector_store.search(

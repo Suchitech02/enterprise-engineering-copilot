@@ -21,7 +21,4 @@ class MockEmbeddingModel(BaseEmbeddingModel):
         """
         value = float(len(text))
 
-        return [
-            value
-            for _ in range(self.VECTOR_SIZE)
-        ]
+        return [value for _ in range(self.VECTOR_SIZE)]

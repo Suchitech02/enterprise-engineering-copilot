@@ -23,18 +23,16 @@ class SimpleChunker(BaseChunker):
         """
         if not document:
             return []
-        
+
         if chunk_size <= overlap:
-            raise ValueError(
-                "Chunk Size must be greater than overlap."
-            )
-        
+            raise ValueError("Chunk Size must be greater than overlap.")
+
         chunks: list[str] = []
 
         step = chunk_size - overlap
 
         for start in range(0, len(document), step):
-            chunk = document[start: start + chunk_size]
+            chunk = document[start : start + chunk_size]
 
             if chunk:
                 chunks.append(chunk)

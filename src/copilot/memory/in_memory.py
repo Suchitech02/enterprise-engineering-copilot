@@ -6,16 +6,15 @@ from copilot.memory.base import BaseConversationStore
 class InMemoryConversationStore(BaseConversationStore):
     """Simple in-memory conversation storage."""
 
-
     def __init__(self) -> None:
         self._memory = defaultdict(list)
 
     def get_messages(
-            self,
-            conversation_id: str,
+        self,
+        conversation_id: str,
     ) -> list[dict]:
         return self._memory[conversation_id]
-    
+
     def add_message(
         self,
         conversation_id: str,
@@ -28,7 +27,7 @@ class InMemoryConversationStore(BaseConversationStore):
                 "content": content,
             }
         )
-    
+
     def clear(
         self,
         conversation_id: str,

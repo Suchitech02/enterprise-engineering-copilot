@@ -1,3 +1,4 @@
+from copilot.models.document import Document
 from copilot.retrieval.in_memory import InMemoryRetriever
 from copilot.vectorstore.in_memory import InMemoryVectorStore
 
@@ -7,16 +8,14 @@ def test_retrieve_returns_documents():
 
     retriever = InMemoryRetriever(
         documents=[
-            "Databricks",
-            "Apache Spark",
+            Document(text="Databricks"),
+            Document(text="Apache Spark"),
         ],
     )
 
-    results = retriever.retrieve(
-        query="Databricks",
-    )
+    results = retriever.retrieve("Databricks")
 
-    assert results == [
+    assert [doc.text for doc in results] == [
         "Databricks",
         "Apache Spark",
     ]
@@ -27,10 +26,10 @@ def test_retrieve_respects_limit():
 
     retriever = InMemoryRetriever(
         documents=[
-            "Document 1",
-            "Document 2",
-            "Document 3",
-            "Document 4",
+            Document(text="Document 1"),
+            Document(text="Document 2"),
+            Document(text="Document 3"),
+            Document(text="Document 4"),
         ],
     )
 
@@ -39,7 +38,7 @@ def test_retrieve_respects_limit():
         limit=2,
     )
 
-    assert results == [
+    assert [doc.text for doc in results] == [
         "Document 1",
         "Document 2",
     ]
@@ -64,8 +63,8 @@ def test_retrieve_limit_greater_than_documents():
 
     retriever = InMemoryRetriever(
         documents=[
-            "Document 1",
-            "Document 2",
+            Document(text="Document 1"),
+            Document(text="Document 2"),
         ],
     )
 
@@ -74,7 +73,7 @@ def test_retrieve_limit_greater_than_documents():
         limit=10,
     )
 
-    assert results == [
+    assert [doc.text for doc in results] == [
         "Document 1",
         "Document 2",
     ]
@@ -87,15 +86,13 @@ def test_uses_injected_vector_store():
 
     retriever = InMemoryRetriever(
         documents=[
-            "Databricks",
+            Document(text="Databricks"),
         ],
         vector_store=vector_store,
     )
 
-    results = retriever.retrieve(
-        query="Databricks",
-    )
+    results = retriever.retrieve("Databricks")
 
-    assert results == [
+    assert [doc.text for doc in results] == [
         "Databricks",
     ]

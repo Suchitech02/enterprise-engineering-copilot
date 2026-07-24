@@ -1,3 +1,6 @@
+from copilot.models.document import Document
+
+
 class PromptBuilder:
     """Build prompts for different enterprise engineering tasks."""
 
@@ -123,22 +126,26 @@ Do not invent extra headings.
     @staticmethod
     def build_rag_prompt(
         question: str,
-        documents: list[str],
+        documents: list[Document],
     ) -> str:
         """Build a retrieval-augmented prompt."""
 
-        context = "\n\n".join(documents)
+        context = "\n\n".join(
+            f"Source: {document.metadata.get('source', 'Unknown')}\n"
+            f"{document.text}"
+            for document in documents
+        )
 
         return f"""
-    You are Enterprise Engineering Copilot.
+You are Enterprise Engineering Copilot.
 
-    Use only the information provided in the context below to answer the user's question.
+Use only the information provided in the context below to answer the user's question.
 
-    Context:
-    {context}
+Context:
+{context}
 
-    Question:
-    {question}
+Question:
+{question}
 
-    If the answer cannot be found in the context, say you don't know.
-    """
+If the answer cannot be found in the context, say you don't know.
+"""
