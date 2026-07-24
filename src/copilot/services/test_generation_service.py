@@ -5,6 +5,8 @@ from copilot.prompts.test_prompt_builder import TestPromptBuilder
 
 class UnitTestGenerationService:
     """Service responsible for AI-generated pytest tests."""
+    
+    SYSTEM_PROMPT = "You are an expert Python software engineer."
 
     def __init__(
         self,
@@ -22,7 +24,10 @@ class UnitTestGenerationService:
             python_code,
         )
 
-        result = self.llm.generate(prompt)
+        result = self.llm.generate(
+            system_prompt=self.SYSTEM_PROMPT,
+            user_prompt=prompt,
+        )
 
         result = result.replace("```python", "").replace("```", "").strip()
 

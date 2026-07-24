@@ -7,7 +7,7 @@ class InMemoryConversationStore(BaseConversationStore):
     """Simple in-memory conversation storage."""
 
     def __init__(self) -> None:
-        self._memory = defaultdict(list)
+        self._memory: dict[str, list[dict[str, str]]] = defaultdict(list)
 
     def get_messages(
         self,

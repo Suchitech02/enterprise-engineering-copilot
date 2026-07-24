@@ -110,10 +110,7 @@ Do not invent extra headings.
     ) -> str:
         """Build a conversational prompt from the message history."""
 
-        conversation = "\n".join(
-            f"{message['role']}: {message['content']}"
-            for message in history
-        )
+        conversation = "\n".join(f"{message['role']}: {message['content']}" for message in history)
 
         return f"""
     You are Enterprise Engineering Copilot.
@@ -131,8 +128,7 @@ Do not invent extra headings.
         """Build a retrieval-augmented prompt."""
 
         context = "\n\n".join(
-            f"Source: {document.metadata.get('source', 'Unknown')}\n"
-            f"{document.text}"
+            f"Source: {document.metadata.get('source', 'Unknown')}\n{document.text}"
             for document in documents
         )
 

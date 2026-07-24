@@ -33,3 +33,6 @@ def test_retrieve_and_generate() -> None:
     service.llm.generate.assert_called_once()
 
     assert response.response == "Generated response"
+
+    assert len(response.sources) == 1
+    assert response.sources[0].source == "databricks.md"
