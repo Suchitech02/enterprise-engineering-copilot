@@ -2,7 +2,11 @@ from copilot.services.test_generation_service import UnitTestGenerationService
 
 
 class FakeLLM:
-    def generate(self, prompt: str) -> str:
+    def generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> str:
         return "import pytest"
 
 

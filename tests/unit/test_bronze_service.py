@@ -3,7 +3,11 @@ from copilot.services.bronze_service import BronzeService
 
 
 class FakeLLM:
-    def generate(self, prompt: str) -> str:
+    def generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+    ) -> str:
         return """
 ## SUMMARY
 
