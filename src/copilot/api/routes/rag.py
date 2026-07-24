@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 
-from copilot.models.generate import GenerateResponse
 from copilot.models.rag import RagRequest, RagResponse
 from copilot.services.assistant_service import AssistantService
 
