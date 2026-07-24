@@ -1,3 +1,4 @@
+from copilot.models.document import Document
 from copilot.vectorstore.in_memory import (
     InMemoryVectorStore,
 )
@@ -9,29 +10,35 @@ def test_add_vector():
     store = InMemoryVectorStore()
 
     store.add(
-        text="Databrciks",
-        embedding=[1.0,2.0],
+        document=Document(
+            text="Databricks",
+        ),
+        embedding=[1.0, 2.0],
     )
 
     assert len(store._vectors) == 1
+    assert store._vectors[0][1].text == "Databricks"
 
-def test_search_returns_text():
+
+def test_search_returns_documents():
     """Test searching vectors."""
 
     store = InMemoryVectorStore()
 
     store.add(
-        text="Databricks",
-        embedding=[1.0],
+        document=Document(
+            text="Databricks",
+        ),
+        embedding=[1.0, 2.0],
     )
 
     results = store.search(
-        embedding=[1.0],
+        embedding=[1.0, 2.0],
     )
 
-    assert results == [
-        "Databricks",
-    ]
+    assert len(results) == 1
+    assert results[0].text == "Databricks"
+
 
 def test_search_limit():
     """Test search limit."""
@@ -40,7 +47,9 @@ def test_search_limit():
 
     for i in range(10):
         store.add(
-            text=f"Doc {i}",
+            document=Document(
+                text=f"Doc {i}",
+            ),
             embedding=[float(i)],
         )
 

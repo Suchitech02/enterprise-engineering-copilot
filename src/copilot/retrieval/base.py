@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from copilot.models.document import Document
+
 
 class BaseRetriever(ABC):
     """Abstract base class for document retrieval."""
@@ -9,6 +11,6 @@ class BaseRetriever(ABC):
         self,
         query: str,
         limit: int = 5,
-    ) -> list[str]:
+    ) -> list[Document]:
         """Retrieve relevant documents."""
         raise NotImplementedError

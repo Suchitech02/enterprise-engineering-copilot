@@ -30,7 +30,7 @@ class MockLLMClient(BaseLLMClient):
                 ],
             }
         )
-    
+
     def stream_generate(
         self,
         system_prompt: str,
@@ -69,7 +69,7 @@ class InvalidJsonLLM(BaseLLMClient):
         user_prompt: str,
     ) -> str:
         return "this is not valid json"
-    
+
     def stream_generate(
         self,
         system_prompt: str,

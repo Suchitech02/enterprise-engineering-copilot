@@ -1,12 +1,18 @@
 from unittest.mock import MagicMock
 
+from copilot.models.document import Document
 from copilot.services.assistant_service import AssistantService
 
 
 def test_retrieve_and_generate() -> None:
     retriever = MagicMock()
     retriever.retrieve.return_value = [
-        "Databricks supports Delta Live Tables.",
+        Document(
+            text="Databricks supports Delta Live Tables.",
+            metadata={
+                "source": "databricks.md",
+            },
+        ),
     ]
 
     service = AssistantService(

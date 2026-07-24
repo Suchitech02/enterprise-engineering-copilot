@@ -31,11 +31,11 @@ class OllamaClient(BaseLLMClient):
         )
 
         return response["message"]["content"]
-    
+
     def stream_generate(
-            self,
-            system_prompt: str,
-            user_prompt: str,
+        self,
+        system_prompt: str,
+        user_prompt: str,
     ) -> Iterator[str]:
         """Generate streamed text from Ollama."""
 
@@ -49,10 +49,9 @@ class OllamaClient(BaseLLMClient):
                 {
                     "role": "user",
                     "content": user_prompt,
-                }
-                
+                },
             ],
-            stream= True,
+            stream=True,
         )
 
         for chunk in stream:

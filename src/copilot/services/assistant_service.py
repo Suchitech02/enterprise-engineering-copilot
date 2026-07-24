@@ -29,19 +29,14 @@ class AssistantService:
         retriever: BaseRetriever | None = None,
     ) -> None:
         self.llm = get_llm()
-        self.memory: BaseConversationStore = (
-            memory or InMemoryConversationStore()
-        )
+        self.memory: BaseConversationStore = memory or InMemoryConversationStore()
         loader = DocumentLoader()
 
         documents = loader.load_documents(
             Path("knowledge"),
         )
-        self.retriever = (
-            retriever
-            or InMemoryRetriever(
-                documents=documents,
-            )
+        self.retriever = retriever or InMemoryRetriever(
+            documents=documents,
         )
 
     def generate(
@@ -88,14 +83,11 @@ class AssistantService:
         )
 
         response = self.llm.generate(
-            system_prompt = self.SYSTEM_PROMPT,
-            user_prompt = prompt,
+            system_prompt=self.SYSTEM_PROMPT,
+            user_prompt=prompt,
         )
 
-        return GenerateResponse(
-            response=response
-        )
-
+        return GenerateResponse(response=response)
 
     def chat(
         self,

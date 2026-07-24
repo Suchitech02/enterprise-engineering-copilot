@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from copilot.models.document import Document
+
 
 class BaseVectorStore(ABC):
     """Abstract vector store."""
@@ -7,15 +9,13 @@ class BaseVectorStore(ABC):
     @abstractmethod
     def add(
         self,
-        text: str,
+        document: Document,
         embedding: list[float],
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @abstractmethod
     def search(
         self,
         embedding: list[float],
         limit: int = 5,
-    ) -> list[str]:
-        ...
+    ) -> list[Document]: ...

@@ -22,7 +22,7 @@ class MockLLMClient(BaseLLMClient):
                 "explanation": ("This function accepts two parameters and returns their sum."),
             }
         )
-    
+
     def stream_generate(
         self,
         system_prompt: str,
@@ -55,7 +55,7 @@ class InvalidJsonLLM(BaseLLMClient):
         user_prompt: str,
     ) -> str:
         return "this is not valid json"
-    
+
     def stream_generate(
         self,
         system_prompt: str,

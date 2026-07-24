@@ -1,5 +1,6 @@
 from copilot.embeddings.mock_embedding import MockEmbeddingModel
 from copilot.indexing.builder import IndexBuilder
+from copilot.models.document import Document
 from copilot.vectorstore.in_memory import InMemoryVectorStore
 
 
@@ -13,15 +14,18 @@ def test_build_single_document():
     store = InMemoryVectorStore()
 
     builder.build(
-        documents=["Databricks"],
+        documents=[
+            Document(text="Databricks"),
+        ],
         vector_store=store,
     )
 
-    assert store.search(
+    results = store.search(
         embedding=MockEmbeddingModel().embed("Databricks"),
-    ) == [
-        "Databricks",
-    ]
+    )
+
+    assert len(results) == 1
+    assert results[0].text == "Databricks"
 
 
 def test_build_multiple_documents():
@@ -35,8 +39,8 @@ def test_build_multiple_documents():
 
     builder.build(
         documents=[
-            "Databricks",
-            "Apache Spark",
+            Document(text="Databricks"),
+            Document(text="Unity Catalog"),
         ],
         vector_store=store,
     )
@@ -63,9 +67,12 @@ def test_build_empty_documents():
         vector_store=store,
     )
 
-    assert store.search(
-        embedding=[1.0] * 10,
-    ) == []
+    assert (
+        store.search(
+            embedding=[1.0] * 10,
+        )
+        == []
+    )
 
 
 def test_build_preserves_existing_documents():
@@ -78,12 +85,16 @@ def test_build_preserves_existing_documents():
     store = InMemoryVectorStore()
 
     builder.build(
-        documents=["Document 1"],
+        documents=[
+            Document(text="Document 1"),
+        ],
         vector_store=store,
     )
 
     builder.build(
-        documents=["Document 2"],
+        documents=[
+            Document(text="Document 2"),
+        ],
         vector_store=store,
     )
 
@@ -93,3 +104,7 @@ def test_build_preserves_existing_documents():
     )
 
     assert len(results) == 2
+    assert {doc.text for doc in results} == {
+        "Document 1",
+        "Document 2",
+    }

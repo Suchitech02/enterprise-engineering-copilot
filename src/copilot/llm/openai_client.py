@@ -33,7 +33,7 @@ class OpenAIClient(BaseLLMClient):
         )
 
         return response.choices[0].message.content or ""
-    
+
     def stream_generate(
         self,
         system_prompt: str,

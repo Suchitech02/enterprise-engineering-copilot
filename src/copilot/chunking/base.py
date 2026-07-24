@@ -20,5 +20,3 @@ class BaseChunker(ABC):
         Returns:
             A list of document chunks.
         """
-       
-

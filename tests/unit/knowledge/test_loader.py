@@ -13,7 +13,13 @@ def test_load_markdown_document(tmp_path: Path):
 
     documents = loader.load_documents(tmp_path)
 
-    assert documents == ["# Databricks"]
+    assert len(documents) == 1
+
+    assert documents[0].text == "# Databricks"
+
+    assert documents[0].metadata == {
+        "source": "doc.md",
+    }
 
 
 def test_load_text_document(tmp_path: Path):
@@ -26,7 +32,13 @@ def test_load_text_document(tmp_path: Path):
 
     documents = loader.load_documents(tmp_path)
 
-    assert documents == ["Unity Catalog"]
+    assert len(documents) == 1
+
+    assert documents[0].text == "Unity Catalog"
+
+    assert documents[0].metadata == {
+        "source": "notes.txt",
+    }
 
 
 def test_ignore_unsupported_files(tmp_path: Path):
