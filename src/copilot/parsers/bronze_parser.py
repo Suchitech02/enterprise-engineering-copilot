@@ -30,10 +30,9 @@ class BronzeParser:
 
     @staticmethod
     def parse(answer: str) -> BronzeGenerationResponse:
-        sections = {}
-
-        current_section = None
-        current_content = []
+        sections: dict[str, str] = {}
+        current_section: str | None = None
+        current_content: list[str] = []
 
         for line in answer.splitlines():
             if line.startswith("## "):

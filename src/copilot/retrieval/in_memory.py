@@ -16,15 +16,9 @@ class InMemoryRetriever(BaseRetriever):
         embedding_model: BaseEmbeddingModel | None = None,
         vector_store: BaseVectorStore | None = None,
     ) -> None:
-        self.embedding_model = (
-            embedding_model
-            or MockEmbeddingModel()
-        )
+        self.embedding_model = embedding_model or MockEmbeddingModel()
 
-        self.vector_store = (
-            vector_store
-            or InMemoryVectorStore()
-        )
+        self.vector_store = vector_store or InMemoryVectorStore()
 
         builder = IndexBuilder(
             embedding_model=self.embedding_model,

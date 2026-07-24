@@ -8,6 +8,8 @@ from copilot.prompts.prompt_builder import PromptBuilder
 class BronzeService:
     """Service responsible for Bronze AI orchestration."""
 
+    SYSTEM_PROMPT = "You are an expert Databricks data engineer."
+
     def __init__(self, llm: BaseLLMClient | None = None) -> None:
         if llm is None:
             llm = get_llm()
@@ -28,6 +30,9 @@ class BronzeService:
             sample_response=request.sample_response,
         )
 
-        answer = self.llm.generate(prompt)
+        answer = self.llm.generate(
+            system_prompt=self.SYSTEM_PROMPT,
+            user_prompt=prompt,
+        )
 
         return BronzeParser.parse(answer)

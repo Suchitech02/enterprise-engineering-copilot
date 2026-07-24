@@ -7,6 +7,7 @@ from copilot.memory.base import BaseConversationStore
 from copilot.memory.in_memory import InMemoryConversationStore
 from copilot.models.chat import ChatResponse
 from copilot.models.generate import GenerateResponse
+from copilot.models.rag import RagResponse, Source
 from copilot.prompts.prompt_builder import PromptBuilder
 from copilot.retrieval.base import BaseRetriever
 from copilot.retrieval.in_memory import InMemoryRetriever
@@ -70,12 +71,19 @@ class AssistantService:
     def retrieve_and_generate(
         self,
         question: str,
-    ) -> GenerateResponse:
-        """Generate a response using a retrieved context."""
+    ) -> RagResponse:
+        """Generate a response using retrieved context."""
 
         documents = self.retriever.retrieve(
             query=question,
         )
+
+        sources = [
+            Source(
+                source=document.metadata["source"],
+            )
+            for document in documents
+        ]
 
         prompt = PromptBuilder.build_rag_prompt(
             question=question,
@@ -87,7 +95,10 @@ class AssistantService:
             user_prompt=prompt,
         )
 
-        return GenerateResponse(response=response)
+        return RagResponse(
+            response=response,
+            sources=sources,
+        )
 
     def chat(
         self,
