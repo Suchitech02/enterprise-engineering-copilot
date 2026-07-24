@@ -27,7 +27,7 @@ def test_rag_endpoint(mock_assistant):
     )
 
     assert response.status_code == 200
-
+    
     assert response.json() == {
         "response": "Generated response",
         "sources": [
