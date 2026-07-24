@@ -8,6 +8,8 @@ class UnitTestGenerationService:
     
     SYSTEM_PROMPT = "You are an expert Python software engineer."
 
+    SYSTEM_PROMPT = "You are an expert Python software engineer."
+
     def __init__(
         self,
         llm: BaseLLMClient | None = None,
