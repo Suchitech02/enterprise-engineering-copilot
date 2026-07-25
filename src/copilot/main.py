@@ -5,6 +5,9 @@ from copilot.api.routes.chat import router as chat_router
 from copilot.api.routes.document import router as document_router
 from copilot.api.routes.explain import router as explain_router
 from copilot.api.routes.generate import router as generate_router
+from copilot.api.routes.gold import (
+    router as gold_router,
+)
 from copilot.api.routes.health import router as health_router
 from copilot.api.routes.rag import router as rag_router
 from copilot.api.routes.refactor import router as refactor_router
@@ -31,6 +34,7 @@ def create_app() -> FastAPI:
     app.include_router(chat_router)
     app.include_router(rag_router)
     app.include_router(silver_router)
+    app.include_router(gold_router)
 
     return app
 
