@@ -10,6 +10,9 @@ from copilot.api.routes.rag import router as rag_router
 from copilot.api.routes.refactor import router as refactor_router
 from copilot.api.routes.review import router as review_router
 from copilot.api.routes.root import router as root_router
+from copilot.api.routes.silver import (
+    router as silver_router,
+)
 
 
 def create_app() -> FastAPI:
@@ -27,6 +30,7 @@ def create_app() -> FastAPI:
     app.include_router(document_router)
     app.include_router(chat_router)
     app.include_router(rag_router)
+    app.include_router(silver_router)
 
     return app
 
